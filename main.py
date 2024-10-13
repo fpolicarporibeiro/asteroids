@@ -11,6 +11,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
+    global CURRENT_SCORE
     
     #Player
     updatable = pygame.sprite.Group()
@@ -44,14 +45,20 @@ def main():
                 if shot.detect_collisions(asteroid):
                     asteroid.split()
                     shot.kill()
+                    CURRENT_SCORE += SCORE_IMPLEMENT
         screen.fill((0,0,0))
+        
+        #Display score
+        pygame.font.init()
+        font = pygame.font.Font(None, 36)
+        score_text = font.render(f'Score: {CURRENT_SCORE}', True, (255, 255, 255))
+        screen.blit(score_text, (10, 10))
+
         for draw in drawable:
             draw.draw(screen)  
         pygame.display.flip()
         dt = clock.tick(60) / 1000 
         
-
-
 
 if __name__ == "__main__":
     main()
